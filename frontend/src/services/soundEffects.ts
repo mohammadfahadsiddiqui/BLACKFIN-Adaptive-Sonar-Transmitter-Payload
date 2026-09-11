@@ -8,6 +8,12 @@ let userHasInteracted = false;
 if (typeof window !== 'undefined') {
   const registerInteraction = () => {
     userHasInteracted = true;
+    if (!audioCtx) {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
+      if (AudioContextClass) {
+        audioCtx = new AudioContextClass();
+      }
+    }
     if (audioCtx && audioCtx.state === 'suspended') {
       audioCtx.resume().catch(() => {});
     }
@@ -16,6 +22,7 @@ if (typeof window !== 'undefined') {
   window.addEventListener('pointerdown', registerInteraction, { passive: true, once: true });
   window.addEventListener('keydown', registerInteraction, { passive: true, once: true });
   window.addEventListener('touchstart', registerInteraction, { passive: true, once: true });
+  window.addEventListener('click', registerInteraction, { passive: true, once: true });
 }
 
 export function unlockAudioContext(): void {
@@ -28,6 +35,7 @@ export function unlockAudioContext(): void {
 
 function getAudioContext(): AudioContext | null {
   if (typeof window === 'undefined') return null;
+  if (!userHasInteracted) return null;
   if (!audioCtx) {
     const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext;
     if (AudioContextClass) {
