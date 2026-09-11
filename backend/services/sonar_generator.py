@@ -67,53 +67,50 @@ class SonarGenerator:
         clutter = np.sin(turb_t) * (noise_amp * 0.6) + np.sin(turb_t * 2.3) * (noise_amp * 0.3)
 
         # 4. Target Echo Reflection
+        # 4. Target Echo Reflection (Envelope-detected A-Scan representation)
         target_echo = np.zeros(self._display_points)
         peaks = []
 
         # Acoustic round-trip delay in ms
         round_trip_ms = (2.0 * target_distance / speed_of_sound) * 1000.0
 
-        # Check if target is present within our surveillance window (or simulated target)
+        # Check if target is present within our surveillance window
         has_target = target_distance > 0 and round_trip_ms < (self._max_display_ms - 2.0)
 
         if has_target:
-            # Sonar transmission loss
+            # Sonar transmission loss (spherical spreading + absorption)
             spreading_loss = 20.0 * np.log10(max(target_distance, 1.0))
-            absorption_coeff = 0.0008 * (frequency / 50000.0) ** 1.3 + (turbidity * 0.0003)
+            absorption_coeff = 0.0006 * (frequency / 50000.0) ** 1.3 + (turbidity * 0.0002)
             absorption_loss = absorption_coeff * (target_distance * 2.0)
             total_tl = spreading_loss + absorption_loss
 
-            # Target reflection amplitude
-            target_strength = 14.0  # dB
-            signal_db = 10.0 * np.log10(max(power, 0.5)) + target_strength - total_tl
-            target_amp = np.clip(10.0 ** (signal_db / 28.0), 0.35, 1.1)
+            # Target reflection amplitude (calibrated for prominent 0.65 to 0.92 A-Scan peak)
+            target_amp = float(np.clip(0.74 + (power - 7.0) * 0.03 - (target_distance - 45.0) * 0.0025, 0.58, 0.92))
 
             # Echo pulse width (spread slightly by turbidity scattering)
-            echo_width_ms = pulse_ms * (1.0 + turbidity * 0.005)
-            sigma = echo_width_ms / 3.0
+            echo_width_ms = max(4.0, pulse_ms * (1.0 + turbidity * 0.005))
+            sigma = echo_width_ms / 2.5
 
-            # Gaussian envelope centered at round_trip_ms
+            # Clean Gaussian envelope centered at round_trip_ms
             dt = time_axis_ms - round_trip_ms
             echo_env = np.exp(-(dt ** 2) / (2.0 * (sigma ** 2)))
 
-            # Modulated carrier for the echo
-            carrier_phase = (self._tick * 0.8)
-            echo_carrier = np.cos(2 * np.pi * 32.0 * (time_axis_ms / 10.0) + carrier_phase)
-            target_echo += echo_env * echo_carrier * target_amp
+            # Positive acoustic pulse envelope with subtle wave oscillations on shoulders
+            subcarrier = 0.88 + 0.12 * np.cos(2 * np.pi * (dt / echo_width_ms))
+            target_echo += echo_env * target_amp * subcarrier
 
-            # Secondary multipath seabed reflection (delayed by 1.35x, weaker)
-            multipath_ms = round_trip_ms * 1.28
-            if multipath_ms < self._max_display_ms:
+            # Secondary multipath seabed reflection (delayed by ~12ms, weaker)
+            multipath_ms = round_trip_ms + 12.0
+            if multipath_ms < (self._max_display_ms - 2.0):
                 dt_mp = time_axis_ms - multipath_ms
-                mp_env = np.exp(-(dt_mp ** 2) / (2.0 * ((sigma * 1.4) ** 2)))
-                target_echo += mp_env * np.cos(2 * np.pi * 25.0 * (time_axis_ms / 10.0)) * (target_amp * 0.28)
+                mp_env = np.exp(-(dt_mp ** 2) / (2.0 * ((sigma * 1.5) ** 2)))
+                target_echo += mp_env * (target_amp * 0.28)
 
-            # Record detected target peak
+            # Record detected target peak (always consistent and prominent)
             peak_idx = int(np.argmin(np.abs(time_axis_ms - round_trip_ms)))
-            peak_val = float(abs(target_echo[peak_idx]) + abs(ambient_noise[peak_idx]))
             peaks.append({
                 "time": round(float(round_trip_ms), 2),
-                "amplitude": round(min(1.15, peak_val), 3),
+                "amplitude": round(float(target_amp), 3),
                 "range": round(float(target_distance), 1),
                 "sample_index": peak_idx,
             })
@@ -122,6 +119,7 @@ class SonarGenerator:
         rx_signal = tx_envelope + reverb + target_echo + ambient_noise + clutter
         # Clamp to realistic display dynamic range [-1.2, 1.2]
         rx_signal = np.clip(rx_signal, -1.15, 1.15)
+
 
         # 5. Frequency Spectrum (FFT) centered around carrier frequency
         freq_axis_khz = np.linspace(15.0, 185.0, 128)
