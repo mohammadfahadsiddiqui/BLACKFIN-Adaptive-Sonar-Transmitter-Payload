@@ -188,32 +188,37 @@ export const BootLoadingScreen: React.FC = () => {
       </div>
 
       {/* Main Center Display: Branding, Sonar Radar, and Staggered Boot Telemetry */}
-      <div className="w-full max-w-md flex flex-col items-center justify-center my-auto">
+      <div className="w-full max-w-md flex flex-col items-center justify-center my-auto py-2">
         {/* Centered Logo & Wordmark */}
-        <div className="flex flex-col items-center text-center mb-6">
-          <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-cyan-400/80 shadow-[0_0_30px_rgba(0,242,254,0.45)] bg-[#070b12] p-1 mb-3">
+        <div className="flex flex-col items-center text-center mb-3">
+          <div
+            className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-cyan-400/80 shadow-[0_0_25px_rgba(0,242,254,0.45)] bg-[#070b12] p-0.5 mb-2 shrink-0"
+            style={{ width: '56px', height: '56px', maxWidth: '56px', maxHeight: '56px' }}
+          >
             <img
               src="/blackfin_logo.jpg"
               alt="BLACKFIN"
               className="w-full h-full object-cover rounded-xl"
+              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
 
-          <h1 className="font-mono text-3xl sm:text-4xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-200 to-emerald-400 drop-shadow-[0_0_20px_rgba(0,242,254,0.3)]">
+          <h1 className="font-mono text-2xl sm:text-3xl font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-200 to-emerald-400 drop-shadow-[0_0_20px_rgba(0,242,254,0.3)]">
             BLACKFIN
           </h1>
 
-          <div className="text-xs font-mono tracking-[0.3em] text-slate-400 font-semibold uppercase mt-1">
+          <div className="text-[11px] font-mono tracking-[0.25em] text-slate-400 font-semibold uppercase mt-0.5">
             SMARTER MISSIONS
           </div>
 
-          <div className="text-[10px] font-mono text-cyan-400/90 mt-2 px-2.5 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-800/60 shadow-[0_0_12px_rgba(0,242,254,0.2)]">
+          <div className="text-[9px] font-mono text-cyan-400/90 mt-1.5 px-2.5 py-0.5 rounded-full bg-cyan-950/70 border border-cyan-800/60 shadow-[0_0_12px_rgba(0,242,254,0.2)]">
             LOW-POWER ADAPTIVE SOFTWARE-DEFINED SONAR PAYLOAD
           </div>
         </div>
 
         {/* Center Stage: High-Fidelity Sonar Radar Display */}
-        <div className="relative w-56 h-56 sm:w-64 sm:h-64 rounded-full border border-cyan-500/40 bg-[#060a12]/95 shadow-[0_0_40px_rgba(0,242,254,0.2)] overflow-hidden flex items-center justify-center mb-6">
+        <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full border border-cyan-500/40 bg-[#060a12]/95 shadow-[0_0_35px_rgba(0,242,254,0.2)] overflow-hidden flex items-center justify-center mb-4 shrink-0">
+
           {/* Concentric Range Rings */}
           <div className="absolute w-[80%] h-[80%] rounded-full border border-cyan-500/25" />
           <div className="absolute w-[56%] h-[56%] rounded-full border border-cyan-500/25" />
