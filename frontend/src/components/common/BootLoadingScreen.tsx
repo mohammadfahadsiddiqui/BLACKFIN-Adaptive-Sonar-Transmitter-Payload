@@ -3,8 +3,9 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useSystemStore } from '../../stores/systemStore';
-import { playSonarPing } from '../../services/soundEffects';
+import { playSonarPing, unlockAudioContext } from '../../services/soundEffects';
 import { Shield, Volume2, VolumeX, CheckCircle2, ChevronRight } from 'lucide-react';
+
 
 interface BootStep {
   id: string;
@@ -119,6 +120,7 @@ export const BootLoadingScreen: React.FC = () => {
   // Keyboard shortcut to skip immediately (e.g. Escape key)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      unlockAudioContext();
       if (e.key === 'Escape' || e.key === ' ') {
         if (audioEnabled && !pingPlayedRef.current) {
           playSonarPing(0.1);
@@ -132,6 +134,7 @@ export const BootLoadingScreen: React.FC = () => {
   }, [finishBoot, audioEnabled]);
 
   const handleSkip = () => {
+    unlockAudioContext();
     if (audioEnabled && !pingPlayedRef.current) {
       playSonarPing(0.1);
     }
@@ -141,6 +144,7 @@ export const BootLoadingScreen: React.FC = () => {
 
   return (
     <div
+      onPointerDown={() => unlockAudioContext()}
       className={`fixed inset-0 z-[100] bg-[#070b12] bg-sonar-grid flex flex-col items-center justify-between p-6 sm:p-10 select-none overflow-hidden transition-all duration-400 ease-out ${
         isFadingOut
           ? 'opacity-0 scale-[1.03] pointer-events-none blur-[1px]'
@@ -159,10 +163,14 @@ export const BootLoadingScreen: React.FC = () => {
         <div className="flex items-center gap-4">
           <button
             type="button"
-            onClick={() => setAudioEnabled(!audioEnabled)}
+            onClick={() => {
+              unlockAudioContext();
+              setAudioEnabled(!audioEnabled);
+            }}
             className="hover:text-cyan-300 transition-colors flex items-center gap-1.5 px-2 py-1 rounded bg-[#0b1322] border border-slate-800"
             title="Toggle Sonar Ping Audio"
           >
+
             {audioEnabled ? (
               <>
                 <Volume2 className="w-3.5 h-3.5 text-cyan-400" />

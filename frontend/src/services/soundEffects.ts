@@ -1,7 +1,30 @@
 // BLACKFIN — Web Audio API Sonar Sound Generator
-// Self-contained acoustic synthesizer for submarine sonar ping (0 external assets)
+// Self-contained acoustic synthesizer compliant with browser Autoplay policies (0 console warnings)
 
 let audioCtx: AudioContext | null = null;
+let userHasInteracted = false;
+
+// Listen for first user gesture (pointer, click, tap, or keydown)
+if (typeof window !== 'undefined') {
+  const registerInteraction = () => {
+    userHasInteracted = true;
+    if (audioCtx && audioCtx.state === 'suspended') {
+      audioCtx.resume().catch(() => {});
+    }
+  };
+
+  window.addEventListener('pointerdown', registerInteraction, { passive: true, once: true });
+  window.addEventListener('keydown', registerInteraction, { passive: true, once: true });
+  window.addEventListener('touchstart', registerInteraction, { passive: true, once: true });
+}
+
+export function unlockAudioContext(): void {
+  userHasInteracted = true;
+  const ctx = getAudioContext();
+  if (ctx && ctx.state === 'suspended') {
+    ctx.resume().catch(() => {});
+  }
+}
 
 function getAudioContext(): AudioContext | null {
   if (typeof window === 'undefined') return null;
@@ -17,14 +40,23 @@ function getAudioContext(): AudioContext | null {
 /**
  * Plays a single, restrained, high-fidelity sonar ping.
  * Uses a primary resonant tone (1220 Hz) with subtle harmonic overtone and exponential decay.
+ * Respects browser Autoplay policy: does NOT attempt playback if context is suspended without user interaction.
  */
 export function playSonarPing(volume: number = 0.12): void {
   try {
     const ctx = getAudioContext();
     if (!ctx) return;
 
+    // If context is suspended and user has not interacted yet, exit silently
+    // to strictly adhere to Chrome/Edge autoplay policy and prevent console warnings.
     if (ctx.state === 'suspended') {
+      if (!userHasInteracted) {
+        return;
+      }
       ctx.resume().catch(() => {});
+      if (ctx.state === 'suspended') {
+        return;
+      }
     }
 
     const t = ctx.currentTime;
