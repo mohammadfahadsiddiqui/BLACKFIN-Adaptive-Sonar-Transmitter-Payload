@@ -10,21 +10,21 @@ export const TargetDetectionPanel: React.FC = () => {
   return (
     <div className="panel-base p-4 flex flex-col justify-between">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <Crosshair className="w-4 h-4 text-cyan-400" />
+          <Crosshair className="w-4 h-4 text-cyan-400 shrink-0" />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">
             Acoustic Target Acquisition & Tracking
           </h3>
         </div>
         <div>
           {target.detected ? (
-            <span className="badge-tag bg-cyan-950/90 text-cyan-300 border border-cyan-500/70 shadow-[0_0_10px_rgba(0,242,254,0.3)]">
+            <span className="badge-tag text-[10px] sm:text-xs bg-cyan-950/90 text-cyan-300 border border-cyan-500/70 shadow-[0_0_10px_rgba(0,242,254,0.3)]">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block mr-1" />
               TARGET ACQUIRED
             </span>
           ) : (
-            <span className="badge-tag bg-[#0a1220] text-cyan-400/80 border border-cyan-900/60 flex items-center gap-1.5">
+            <span className="badge-tag text-[10px] sm:text-xs bg-[#0a1220] text-cyan-400/80 border border-cyan-900/60 flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse inline-block" />
               SURVEILLANCE SECTOR ACTIVE
             </span>

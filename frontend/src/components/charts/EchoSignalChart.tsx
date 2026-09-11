@@ -71,19 +71,19 @@ export const EchoSignalChart: React.FC<{ height?: number; title?: string }> = ({
   return (
     <div className="panel-base p-4 flex flex-col justify-between">
       {/* Chart Header */}
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
-          <Activity className="w-4 h-4 text-cyan-400" />
+          <Activity className="w-4 h-4 text-cyan-400 shrink-0" />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">
             {title}
           </h3>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="badge-tag bg-cyan-950/90 text-cyan-300 border border-cyan-500/70 shadow-[0_0_12px_rgba(0,242,254,0.3)] animate-pulse flex items-center gap-1.5">
-            <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-ping mr-0.5" />
+        <div className="flex items-center gap-2.5">
+          <span className="badge-tag text-[10px] sm:text-xs bg-cyan-950/90 text-cyan-300 border border-cyan-500/70 shadow-[0_0_12px_rgba(0,242,254,0.3)] animate-pulse flex items-center gap-1.5 whitespace-nowrap">
+            <span className="w-2 h-2 rounded-full bg-cyan-400 inline-block animate-ping mr-0.5 shrink-0" />
             PEAK @ {peakRange.toFixed(1)}m ({peakSnr.toFixed(1)} dB SNR)
           </span>
-          <span className="text-[11px] font-mono text-slate-400">
+          <span className="hidden sm:inline text-[11px] font-mono text-slate-400 whitespace-nowrap">
             {chartData.length} SAMPLES · TIME-DOMAIN
           </span>
         </div>

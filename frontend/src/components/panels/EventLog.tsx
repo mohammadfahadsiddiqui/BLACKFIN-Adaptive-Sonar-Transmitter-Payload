@@ -63,9 +63,9 @@ export const EventLog: React.FC<{ maxItems?: number }> = ({ maxItems = 100 }) =>
   return (
     <div className="panel-base p-4 flex flex-col justify-between">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <FileText className="w-4 h-4 text-cyan-400" />
+          <FileText className="w-4 h-4 text-cyan-400 shrink-0" />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">
             Mission Event & Adaptation Telemetry Audit Log
           </h3>
@@ -77,7 +77,7 @@ export const EventLog: React.FC<{ maxItems?: number }> = ({ maxItems = 100 }) =>
           <button
             onClick={clearEvents}
             title="Clear Event Log"
-            className="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-all"
+            className="p-1 rounded text-slate-500 hover:text-rose-400 hover:bg-slate-800 transition-all cursor-pointer"
           >
             <Trash2 className="w-3.5 h-3.5" />
           </button>

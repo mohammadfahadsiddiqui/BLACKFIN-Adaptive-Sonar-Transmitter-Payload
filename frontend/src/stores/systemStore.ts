@@ -9,10 +9,12 @@ interface SystemState {
   wsConnected: boolean;
   activeTab: string;
   isBooting: boolean;
+  mobileMenuOpen: boolean;
   setWsConnected: (connected: boolean) => void;
   updateSystemStatus: (status: Partial<SystemStatus>) => void;
   updateComponents: (components: ComponentHealth[]) => void;
   setActiveTab: (tab: string) => void;
+  setMobileMenuOpen: (open: boolean) => void;
   finishBoot: () => void;
   triggerBoot: () => void;
 }
@@ -39,12 +41,14 @@ export const useSystemStore = create<SystemState>((set) => ({
   wsConnected: false,
   activeTab: 'mission',
   isBooting: true,
+  mobileMenuOpen: false,
 
   setWsConnected: (connected) => set({ wsConnected: connected }),
   updateSystemStatus: (status) =>
     set((state) => ({ status: { ...state.status, ...status } })),
   updateComponents: (components) => set({ components }),
-  setActiveTab: (activeTab) => set({ activeTab }),
+  setActiveTab: (activeTab) => set({ activeTab, mobileMenuOpen: false }),
+  setMobileMenuOpen: (mobileMenuOpen) => set({ mobileMenuOpen }),
   finishBoot: () => set({ isBooting: false }),
   triggerBoot: () => set({ isBooting: true }),
 }));

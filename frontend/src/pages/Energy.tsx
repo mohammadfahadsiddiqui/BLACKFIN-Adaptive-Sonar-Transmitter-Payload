@@ -12,7 +12,7 @@ export const Energy: React.FC = () => {
   const sensor = useSensorStore((state) => state.current);
 
   return (
-    <div className="p-5 space-y-4 max-w-[1700px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-8">
+    <div className="p-3 sm:p-5 space-y-4 max-w-[1700px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-12">
       {/* 4 Energy KPI Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
         <KPICard

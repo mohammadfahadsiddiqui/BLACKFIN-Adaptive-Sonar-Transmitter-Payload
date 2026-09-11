@@ -12,11 +12,14 @@ import {
   Cpu,
   Shield,
   ChevronRight,
+  X,
 } from 'lucide-react';
 
 export const Sidebar: React.FC = () => {
   const activeTab = useSystemStore((state) => state.activeTab);
   const setActiveTab = useSystemStore((state) => state.setActiveTab);
+  const mobileMenuOpen = useSystemStore((state) => state.mobileMenuOpen);
+  const setMobileMenuOpen = useSystemStore((state) => state.setMobileMenuOpen);
 
   const navItems = [
     {
@@ -63,8 +66,8 @@ export const Sidebar: React.FC = () => {
     },
   ];
 
-  return (
-    <aside className="w-64 bg-[#080d17]/95 border-r border-[#1f3352] flex flex-col justify-between shrink-0 select-none">
+  const renderNavContent = () => (
+    <>
       {/* Brand Header */}
       <div className="p-3 pb-2 border-b border-[#1f3352]/60">
         <div className="flex items-center gap-3 p-2 rounded-xl bg-gradient-to-br from-[#0c1527] to-[#070b12] border border-cyan-900/40 shadow-inner">
@@ -95,7 +98,7 @@ export const Sidebar: React.FC = () => {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all group ${
+              className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all cursor-pointer group ${
                 isActive
                   ? 'bg-gradient-to-r from-cyan-950/90 to-blue-950/60 border border-cyan-500/50 shadow-[0_0_15px_-3px_rgba(0,242,254,0.25)] text-cyan-300'
                   : 'text-slate-400 hover:text-slate-100 hover:bg-[#0f172a]/60 border border-transparent'
@@ -141,6 +144,45 @@ export const Sidebar: React.FC = () => {
           </div>
         </div>
       </div>
-    </aside>
+    </>
+  );
+
+  return (
+    <>
+      {/* Desktop Sidebar (hidden on mobile, visible on md and up) */}
+      <aside className="hidden md:flex w-64 bg-[#080d17]/95 border-r border-[#1f3352] flex-col justify-between shrink-0 select-none">
+        {renderNavContent()}
+      </aside>
+
+      {/* Mobile Drawer (visible on mobile when opened) */}
+      {mobileMenuOpen && (
+        <div className="fixed inset-0 z-50 md:hidden flex select-none">
+          {/* Dark Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/80 backdrop-blur-sm transition-opacity"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+
+          {/* Off-canvas Sliding Container */}
+          <div className="relative w-72 max-w-[85vw] h-full bg-[#080d17] border-r border-cyan-500/40 flex flex-col justify-between shadow-[0_0_30px_rgba(0,0,0,0.9)] z-10">
+            {/* Mobile Header with Close Button */}
+            <div className="p-3 pb-2 border-b border-[#1f3352]/80 flex items-center justify-between">
+              <span className="font-mono text-xs font-bold text-cyan-400 tracking-wider">
+                BLACKFIN NAVIGATION
+              </span>
+              <button
+                onClick={() => setMobileMenuOpen(false)}
+                className="p-1.5 rounded-lg bg-slate-800 text-slate-300 hover:text-white border border-slate-700 cursor-pointer"
+                title="Close Navigation Drawer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            {renderNavContent()}
+          </div>
+        </div>
+      )}
+    </>
   );
 };

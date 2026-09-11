@@ -74,16 +74,16 @@ export const SonarConfigPanel: React.FC = () => {
   return (
     <div className="panel-base p-4 flex flex-col justify-between">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <Waves className="w-4 h-4 text-cyan-400" />
+          <Waves className="w-4 h-4 text-cyan-400 shrink-0" />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">
             Active Sonar Transmission Parameters
           </h3>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span
-            className={`badge-tag ${
+            className={`badge-tag text-[10px] sm:text-xs ${
               config.mode === 'auto'
                 ? 'bg-cyan-950/80 text-cyan-300 border border-cyan-700/60'
                 : 'bg-amber-950/80 text-amber-300 border border-amber-700/60'
@@ -93,7 +93,7 @@ export const SonarConfigPanel: React.FC = () => {
           </span>
           <button
             onClick={toggleSonar}
-            className={`px-2.5 py-1 rounded text-xs font-mono font-semibold flex items-center gap-1.5 transition-all ${
+            className={`px-2.5 py-1 rounded text-xs font-mono font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
               status.sonar_running
                 ? 'bg-rose-950/70 border border-rose-700/60 text-rose-300 hover:bg-rose-900/80'
                 : 'bg-emerald-950/70 border border-emerald-700/60 text-emerald-300 hover:bg-emerald-900/80'

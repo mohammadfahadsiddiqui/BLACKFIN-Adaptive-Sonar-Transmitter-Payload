@@ -11,21 +11,21 @@ export const AdaptiveDecisionPanel: React.FC = () => {
   return (
     <div className="panel-base p-4 flex flex-col justify-between">
       {/* Header */}
-      <div className="flex items-center justify-between mb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
         <div className="flex items-center gap-2">
-          <BrainCircuit className="w-4 h-4 text-cyan-400" />
+          <BrainCircuit className="w-4 h-4 text-cyan-400 shrink-0" />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">
             Autonomous Adaptation & Decision Logic
           </h3>
         </div>
         <div>
           {latestAdaptation ? (
-            <span className="badge-tag bg-cyan-950/80 text-cyan-300 border border-cyan-700/60">
+            <span className="badge-tag text-[10px] sm:text-xs bg-cyan-950/80 text-cyan-300 border border-cyan-700/60">
               <Sparkles className="w-3 h-3 text-cyan-400 inline mr-1" />
               CONFIDENCE: {latestAdaptation.confidence.toFixed(0)}%
             </span>
           ) : (
-            <span className="badge-tag bg-slate-800 text-slate-400">
+            <span className="badge-tag text-[10px] sm:text-xs bg-slate-800 text-slate-400">
               STABLE CRUISE
             </span>
           )}

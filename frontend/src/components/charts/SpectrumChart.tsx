@@ -34,14 +34,14 @@ export const SpectrumChart: React.FC<{ height?: number }> = ({ height = 220 }) =
   return (
     <div className="panel-base p-4 flex flex-col justify-between">
       {/* Header */}
-      <div className="flex items-center justify-between mb-2">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-2">
         <div className="flex items-center gap-2">
-          <Radio className="w-4 h-4 text-purple-400" />
+          <Radio className="w-4 h-4 text-purple-400 shrink-0" />
           <h3 className="text-xs font-semibold uppercase tracking-wider text-slate-200">
             FFT Spectral Magnitude Spectrum
           </h3>
         </div>
-        <div className="flex items-center gap-2 font-mono text-[11px]">
+        <div className="flex items-center gap-2 font-mono text-[10px] sm:text-[11px]">
           <span className="text-purple-400 font-medium">fc = {centerFreq.toFixed(1)} kHz</span>
           <span className="text-slate-500">|</span>
           <span className="text-slate-400">BW = {config.bandwidth_khz.toFixed(1)} kHz</span>

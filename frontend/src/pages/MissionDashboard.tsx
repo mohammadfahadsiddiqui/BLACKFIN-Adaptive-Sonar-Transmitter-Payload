@@ -38,45 +38,44 @@ export const MissionDashboard: React.FC = () => {
     : 0;
 
   return (
-    <div className="p-5 space-y-4 max-w-[1750px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-8">
+    <div className="p-3 sm:p-5 space-y-4 max-w-[1750px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-12">
       {/* 1. PITCH-DEPLOYABLE SUMMARY HERO STRIP (The 3 numbers judges care about most) */}
       <div className="panel-base p-3 bg-gradient-to-r from-[#0c1629] via-[#0d1f38] to-[#0c1629] border-cyan-500/40 shadow-[0_0_20px_-3px_rgba(0,242,254,0.2)]">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3">
           {/* Pitch metric 1: Detection Confidence */}
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg bg-[#080d17]/80 border border-slate-800">
-            <div className="p-2 rounded-lg bg-cyan-950/90 border border-cyan-700/60 text-cyan-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#080d17]/80 border border-slate-800">
+            <div className="p-2 rounded-lg bg-cyan-950/90 border border-cyan-700/60 text-cyan-400 shrink-0">
               <Target className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
                 TARGET DETECTION CONFIDENCE
               </span>
-              <div className="flex items-baseline gap-1.5 font-mono">
+              <div className="flex flex-wrap items-baseline gap-1.5 font-mono">
                 <span className="text-xl font-black text-cyan-300 drop-shadow-[0_0_8px_rgba(0,242,254,0.4)]">
                   {(target.confidence > 0 ? target.confidence : 78).toFixed(0)}%
                 </span>
-                <span className="text-xs text-slate-300 font-semibold">
+                <span className="text-[11px] sm:text-xs text-slate-300 font-semibold">
                   (@ {(target.estimated_range > 0 ? target.estimated_range : sensor.target_distance).toFixed(1)}m · {(target.snr > 0 ? target.snr : 18.4).toFixed(1)} dB SNR)
                 </span>
               </div>
             </div>
           </div>
 
-
           {/* Pitch metric 2: Power Savings % (Hero Claim) */}
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg bg-[#080d17]/80 border border-emerald-500/40 shadow-inner">
-            <div className="p-2 rounded-lg bg-emerald-950/90 border border-emerald-600/60 text-emerald-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#080d17]/80 border border-emerald-500/40 shadow-inner">
+            <div className="p-2 rounded-lg bg-emerald-950/90 border border-emerald-600/60 text-emerald-400 shrink-0">
               <Zap className="w-5 h-5 fill-emerald-400 animate-pulse" />
             </div>
             <div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
                 TRANSMIT POWER SAVINGS
               </span>
-              <div className="flex items-baseline gap-1.5 font-mono">
+              <div className="flex flex-wrap items-baseline gap-1.5 font-mono">
                 <span className="text-xl font-black text-emerald-400 drop-shadow-[0_0_8px_rgba(52,211,153,0.6)]">
                   {savingsPct.toFixed(1)}% LOWER
                 </span>
-                <span className="text-xs text-slate-300 font-semibold">
+                <span className="text-[11px] sm:text-xs text-slate-300 font-semibold">
                   ({energy.current_power.toFixed(1)}W vs 12.0W fixed)
                 </span>
               </div>
@@ -84,17 +83,17 @@ export const MissionDashboard: React.FC = () => {
           </div>
 
           {/* Pitch metric 3: Autonomous Adaptation Status */}
-          <div className="flex items-center gap-3 px-3 py-1.5 rounded-lg bg-[#080d17]/80 border border-slate-800">
-            <div className="p-2 rounded-lg bg-purple-950/90 border border-purple-700/60 text-purple-400">
+          <div className="flex items-center gap-2.5 sm:gap-3 px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#080d17]/80 border border-slate-800">
+            <div className="p-2 rounded-lg bg-purple-950/90 border border-purple-700/60 text-purple-400 shrink-0">
               <BrainCircuit className="w-5 h-5" />
             </div>
             <div>
-              <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
+              <span className="text-[9px] sm:text-[10px] font-mono text-slate-400 uppercase tracking-wider block">
                 ADAPTATION STATUS
               </span>
-              <div className="flex items-baseline gap-2 font-mono">
+              <div className="flex flex-wrap items-baseline gap-1.5 font-mono">
                 <span className="text-xs font-bold text-white uppercase flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block" />
+                  <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping inline-block shrink-0" />
                   {config.mode === 'auto' ? 'CLOSED-LOOP AUTONOMOUS' : 'MANUAL OVERRIDE'}
                 </span>
                 <span className="text-[10px] text-cyan-300 bg-cyan-950 px-1.5 py-0.5 rounded border border-cyan-800">
@@ -105,7 +104,7 @@ export const MissionDashboard: React.FC = () => {
           </div>
 
           {/* Dual-Phase Hardware Status Badge */}
-          <div className="flex items-center gap-2 pl-2">
+          <div className="flex items-center gap-2 pl-1 sm:pl-2">
             <span className="badge-tag bg-[#0a1120] text-cyan-300 border border-cyan-800/80 px-2.5 py-1 text-[10px]">
               ● {status.data_source === 'SIMULATION' ? 'SIMULATION MODE' : 'LIVE HARDWARE'}
             </span>
@@ -115,7 +114,7 @@ export const MissionDashboard: React.FC = () => {
 
       {/* 2. SECONDARY CONTEXT STRIP: Environmental Telemetry (Compact ribbon, context not hero) */}
       <div className="panel-base p-2.5 bg-[#090e18]/80 border-slate-800/80">
-        <div className="flex items-center justify-between mb-1.5 px-2">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 mb-1.5 px-2">
           <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
             Hydrographic Environmental Context (Secondary Telemetry Inputs)
           </span>

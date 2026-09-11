@@ -31,24 +31,24 @@ export const SystemHealth: React.FC = () => {
   };
 
   return (
-    <div className="p-5 space-y-4 max-w-[1700px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-8">
+    <div className="p-3 sm:p-5 space-y-4 max-w-[1700px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-12">
       {/* Top Banner */}
       <div className="panel-base p-4 bg-gradient-to-r from-[#0d1627] via-[#0e1d35] to-[#0d1627] border-cyan-500/30">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400">
+            <div className="p-2.5 rounded-xl bg-cyan-950 border border-cyan-800 text-cyan-400 shrink-0">
               <Cpu className="w-6 h-6" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+              <div className="flex flex-wrap items-center gap-2">
+                <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">
                   BLACKFIN System Health & Hardware Abstraction Layer
                 </h2>
-                <span className="badge-tag bg-emerald-950 text-emerald-300 border border-emerald-800">
+                <span className="badge-tag text-[9px] sm:text-[10px] bg-emerald-950 text-emerald-300 border border-emerald-800">
                   ● ALL SUBSYSTEMS NOMINAL
                 </span>
               </div>
-              <p className="text-xs text-slate-400 font-mono mt-0.5">
+              <p className="text-[10px] sm:text-xs text-slate-400 font-mono mt-0.5">
                 Subsystem latency monitoring, packet encoder, and STM32 interface diagnostics
               </p>
             </div>

@@ -10,19 +10,19 @@ export const Environment: React.FC = () => {
   const current = useSensorStore((state) => state.current);
 
   return (
-    <div className="p-5 space-y-4 max-w-[1700px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-8">
+    <div className="p-3 sm:p-5 space-y-4 max-w-[1700px] mx-auto overflow-y-auto max-h-[calc(100vh-5.5rem)] pb-12">
       {/* Top Banner: Mackenzie Speed of Sound Equation Output */}
       <div className="panel-base p-4 bg-gradient-to-r from-[#0d1627] via-[#0d1c33] to-[#0d1627] border-cyan-500/30">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-cyan-950 border border-cyan-700/60 text-cyan-400">
+            <div className="p-2.5 rounded-xl bg-cyan-950 border border-cyan-700/60 text-cyan-400 shrink-0">
               <Waves className="w-6 h-6 animate-pulse" />
             </div>
             <div>
-              <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+              <h2 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-white">
                 Mackenzie (1981) Underwater Sound Speed Profile
               </h2>
-              <p className="text-xs text-slate-400 font-mono mt-0.5">
+              <p className="text-[10px] sm:text-xs text-slate-400 font-mono mt-0.5 break-all">
                 c = 1448.96 + 4.591·T - 0.053·T² + 2.37e-4·T³ + 1.34·(S-35) + 0.0163·D
               </p>
             </div>
