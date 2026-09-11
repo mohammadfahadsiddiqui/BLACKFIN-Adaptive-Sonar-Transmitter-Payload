@@ -144,20 +144,21 @@ class SimulationEngine:
 
         if not self._user_override.get("target_distance", False):
             if phase_t < 25.0:
-                # Target cruising at mid-range 55m
-                target_d = 55.0 - (phase_t / 25.0) * 15.0  # 55m -> 40m
+                # Target cruising at mid-range 52m -> 38m
+                target_d = 52.0 - (phase_t / 25.0) * 14.0
             elif phase_t < 45.0:
-                # Target approaches close (40m -> 22m) -> crosses 30m proximity threshold!
+                # Target approaches close (38m -> 22m) -> crosses 30m proximity threshold!
                 p = (phase_t - 25.0) / 20.0
-                target_d = 40.0 - p * 18.0
+                target_d = 38.0 - p * 16.0
             elif phase_t < 65.0:
-                # Target retreats into distance (22m -> 85m)
+                # Target opens distance (22m -> 68m)
                 p = (phase_t - 45.0) / 20.0
-                target_d = 22.0 + p * 63.0
+                target_d = 22.0 + p * 46.0
             else:
-                # Cruising distance
-                target_d = 85.0 - ((phase_t - 65.0) / 15.0) * 30.0
-            self._current["target_distance"] = round(max(8.0, min(180.0, target_d)), 1)
+                # Returns to mid-range cruise (68m -> 52m)
+                target_d = 68.0 - ((phase_t - 65.0) / 15.0) * 16.0
+            self._current["target_distance"] = round(max(15.0, min(70.0, target_d)), 1)
+
 
         if not self._user_override.get("temperature", False):
             # Thermocline drops with depth: warm at surface (22C) down to 8C in deep water
